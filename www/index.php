@@ -11,7 +11,6 @@ spl_autoload_register(function ($class){
                             "path"=> ["Controllers/", "Core/", "Models/"],
                         ];
         $filname = str_ireplace($namespaceArray['namespace'],$namespaceArray['path'], $class  ). ".php";
-        var_dump($filname);
         if(file_exists($filname)) {
             include $filname;
         }
@@ -20,4 +19,3 @@ spl_autoload_register(function ($class){
 
 
 $newUser = new User();
-var_dump($newUser);

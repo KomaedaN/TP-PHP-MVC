@@ -10,6 +10,7 @@ class User extends Database
         parent::__construct();
     }
 
-    private $id;
-    private $name;
+
+    /*private $id;
+    private $name; */
 }

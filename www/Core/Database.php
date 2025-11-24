@@ -6,7 +6,7 @@ class Database
 {
     public function __construct(){  
         try{
-            $pdo = new \PDO("pgsql:host=db;port=;dbname=devdb","devuser", "devpass");
+            $pdo = new \PDO("pgsql:host=db;port=5432;dbname=devdb","devuser", "devpass");
         }catch(\PDOException $e){
             die("Erreur ".$e->getMessage());
         }
