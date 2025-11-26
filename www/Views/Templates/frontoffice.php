@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Frontoffice</title>
-        <link rel="stylesheet" href="/Public/css/style.css">
+        <link rel="stylesheet" href="/Public/css/stylefo.css">
     </head>
     <body>
         <header>

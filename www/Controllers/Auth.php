@@ -3,16 +3,47 @@
 namespace App\Controller;
 
 use App\Core\Render;
+use App\Controller\Base;
 use App\Service\AuthService;
 use App\Service\EmailVerificationService;
-class Auth
+class Auth extends Base
 {
 
-    public function index(): void{
-        var_dump("OUIII")  ;
-    }
+    public function signin(): void{
+        $errors = [];
+        
+        if(
+            !empty($_POST["email"]) &&
+            !empty($_POST["pwd"]) &&
+            count($_POST) == 2
+        ){
+            $email = strtolower(trim($_POST['email']));
 
-    public function login(): void{
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $errors[]="Votre email n'est pas correct";
+            $this->renderPage("login", "frontoffice", $errors);
+            }else{
+                $auth = new AuthService();
+                $userId = $auth->getUserIdFromMail($email);
+                if($userId){
+                    $password = $_POST["pwd"];
+                    $passwordMatch = $auth->verifyPassword($email, $password);
+                    if($passwordMatch){
+                        $_SESSION['user_id'] = $userId;
+                        $this->renderPage("dashboard", "frontoffice");
+                    } else {
+                         $errors[]="Mot de passe incorrect";
+                        $this->renderPage("login", "frontoffice", ["errors" => $errors]);
+                    }
+                } else {
+                    $errors[]= "L'email n'existe pas en bdd";
+                   $this->renderPage("login", "frontoffice", ["errors" => $errors]);
+                }
+            }   
+        } else {
+            echo "Tentative de XSS";
+            $this->renderPage("login", "frontoffice");
+        }
     }
 
     public function signup(): void{
@@ -60,6 +91,7 @@ class Auth
             $createUser = new AuthService();
             $userId = $createUser->createUser($data);
             if(!empty($userId)){
+                $_SESSION['user_id'] = $userId;
                 $token = hash("sha256", bin2hex(random_bytes(32)));
                 $data = [
                 "user_id"=> $userId,
@@ -68,17 +100,23 @@ class Auth
                 $emailService = new EmailVerificationService();
                 $emailService->createUserToken($data);    
             }
-            $render = new Render("dashboard", "frontoffice") ;
-            $render->render();
+            $this->renderPage("dashboard", "frontoffice");
+        } else {
+            $this->renderPage("signup", "frontoffice", $errors);
         }
     }else{
         echo "Tentative de XSS";
+        $this->renderPage("signup", "frontoffice");
     }
+    }
+    public function renderSignup(): void{
+        $this->renderPage("signup", "frontoffice");
+    }
+
+    public function renderLogin(): void{
+         $this->renderPage("login", "frontoffice");
+    }
+
     
-    }
-    public function render(): void{
-        $render = new Render("signup", "frontoffice") ;
-        $render->render();
-    }
 }
 

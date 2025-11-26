@@ -39,5 +39,4 @@ class Render{
             die("Problème avec le template ou la vue");
         }
     }
-
 }
