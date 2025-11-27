@@ -24,3 +24,7 @@
 /signinUser:
   controller: Auth
   action: signin
+
+/logout:
+  controller: Auth
+  action: logout

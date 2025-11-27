@@ -66,9 +66,4 @@ class AuthService
         }
         return false;
     }
-    public function signin($data){
-
-    }
-    public function updateUser($data){
-    }
 }

@@ -54,7 +54,7 @@ class Auth extends Base
         !empty($_POST['pwd']) &&
         !empty($_POST['pwdConfirm']) &&
         count($_POST) == 4
-    ){
+        ){
         //Nettoyage de la donnée
         $name = ucwords(strtolower(trim($_POST['name'])));
         $email = strtolower(trim($_POST['email']));
@@ -104,11 +104,18 @@ class Auth extends Base
         } else {
             $this->renderPage("signup", "frontoffice", $errors);
         }
-    }else{
-        echo "Tentative de XSS";
-        $this->renderPage("signup", "frontoffice");
+        }else{
+            echo "Tentative de XSS";
+            $this->renderPage("signup", "frontoffice");
+        }
     }
+
+    public function logout(){
+        session_unset();
+        session_destroy();
+        $this->renderPage( "home", "frontoffice");
     }
+
     public function renderSignup(): void{
         $this->renderPage("signup", "frontoffice");
     }
