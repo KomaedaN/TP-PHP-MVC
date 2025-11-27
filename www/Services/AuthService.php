@@ -7,23 +7,26 @@ use App\Model\User;
 
 class AuthService
 {  
+    private $pdo;
+    public function __construct(){
+        $this->pdo = Database::getInstance()->getConnection();
+    }
     public function createUser($data) {
         $user = new User();
         $user->setName($data['name']);
         $user->setEmail($data['email']);
         $user->setPassword($data['password']);
 
-        $pdo = Database::getInstance()->getConnection();
         $sql =  'INSERT INTO "user"("name","email","password","created_at")
                     VALUES (:name,:email,:password,\''.date('Y-m-d').'\')';
-        $queryPrepared = $pdo->prepare($sql);
+        $queryPrepared = $this->pdo->prepare($sql);
         if ($queryPrepared->execute([
             "name" => $user->getName(),
             "email" => $user->getEmail(),
             "password" => $user->getPassword()
         ]) 
         ) {
-            $id = $pdo->lastInsertId();
+            $id = $this->pdo->lastInsertId();
             echo"Utilisateur ajouté !";
             return $id;
         } 
@@ -31,10 +34,9 @@ class AuthService
 
 
     public function getUserDataFromId($userId){
-        $pdo = Database::getInstance()->getConnection();
         $sql = 'SELECT email, name, is_active, id FROM "user" WHERE id=:id';
-        $queryPrepared = $pdo->prepare($sql);
-        $queryPrepared->execute(["id" => (int)$userId]);
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute(["id" => (int)$userId['id']]);
         $user = $queryPrepared->fetch();
         return $user;
     }
@@ -42,13 +44,12 @@ class AuthService
     public function updateUserEmail($email, $userId){
         $user = new User();
         $user->setEmail($email);
-        $pdo = Database::getInstance()->getConnection();
         $sql = 'UPDATE "user" SET email=:email WHERE id = :id';
-        $queryPrepared = $pdo->prepare($sql);
+        $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(
         [
             "email" => $user->getEmail(),
-            "id" => $userId
+            "id" => (int)$userId
         ]
         );
     }
@@ -56,23 +57,20 @@ class AuthService
 
     public function updateUserName($name, $userId){
         $user = new User();
-        var_dump($name);
         $user->setName($name);
-        $pdo = Database::getInstance()->getConnection();
         $sql = 'UPDATE "user" SET name=:name WHERE id = :id';
-        $queryPrepared = $pdo->prepare($sql);
+        $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(
         [
             "name" => $user->getName(),
-            "id" => $userId
+            "id" => (int)$userId
         ]
         );
     }
 
     public function verifyEmail($email){
-        $pdo = Database::getInstance()->getConnection();
         $sql = 'SELECT "id" FROM "user" WHERE email=:email';
-        $queryPrepared = $pdo->prepare($sql);
+        $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(["email"=>$email]);
         $res = $queryPrepared->fetch();
         if($res){
@@ -83,9 +81,8 @@ class AuthService
 
     
     public function getUserIdFromMail($email){
-        $pdo = Database::getInstance()->getConnection();
         $sql = 'SELECT "id" FROM "user" WHERE email=:email';
-        $queryPrepared = $pdo->prepare($sql);
+        $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(["email"=>$email]);
         $res = $queryPrepared->fetch();
         if($res){
@@ -95,9 +92,8 @@ class AuthService
     }
 
     public function verifyPassword($email, $password){
-        $pdo = Database::getInstance()->getConnection();
         $sql = 'SELECT "password" FROM "user" WHERE email=:email';
-        $queryPrepared = $pdo->prepare($sql);
+        $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(['email'=>$email]);
         $res = $queryPrepared->fetch();
         if($res){
@@ -107,15 +103,19 @@ class AuthService
     }
 
     public function getIsActiveFromId($userId){
-        $pdo = Database::getInstance()->getConnection();
         $sql = 'SELECT "is_active" FROM "user" WHERE id=:id';
-        $queryPrepared = $pdo->prepare($sql);
-        $queryPrepared->execute(["id"=>(int)$userId]);
-        $res = $queryPrepared->fetch();
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute(["id"=>(int)$userId['id']]);
+        $res = $queryPrepared->fetchColumn();
         if($res){
             return $res;
         }
         return false;
     } 
     
+    public function deleteUserByID($userId){
+        $sql = 'DELETE FROM "user" WHERE id=:id';
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute(["id"=>(int)$userId['id']]);
+    }
 }

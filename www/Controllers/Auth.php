@@ -33,6 +33,7 @@ class Auth extends Base
                         if($isActive === true){
                             $userData = $auth->getUserDataFromId($userId);
                             $this->setSessionData($userData);
+                            var_dump($_SESSION);
                             $this->renderPage("dashboard");
                         } else {
                             $this->errors[]="Votre compte n'est pas encore activé";
