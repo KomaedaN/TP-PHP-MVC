@@ -32,6 +32,36 @@ class Base
             $_SESSION[$key] = $userData[$key];
         }
     }
-}
+    }
+
+
+    public function isAuth(): void
+    {
+        if (!isset($_SESSION["is_active"]) || $_SESSION["is_active"] !== true) {
+            $this->renderHome();
+            exit;
+        }
+    }
+
+
+    protected function getCurrentUserId(): ?int
+    {
+        
+        if (isset($_SESSION['id'])) {
+            return (int) $_SESSION['id'];
+        }
+
+        
+        if (isset($_SESSION['user_id'])) {
+            $u = $_SESSION['user_id'];
+            if (is_array($u)) {
+                $val = $u[0] ?? $u['id'] ?? null;
+                return $val !== null ? (int)$val : null;
+            }
+            return $_SESSION['user_id'] !== null ? (int)$_SESSION['user_id'] : null;
+        }
+
+        return null;
+    }
 
 }

@@ -31,6 +31,21 @@ if(!file_exists("routes.yml")){
 $routes = yaml_parse_file("routes.yml");
 
 if(empty($routes[$uri])){
+    
+    $slug = ltrim($uri, '/');
+    if(!empty($slug) && file_exists("Controllers/Page.php")){
+        include "Controllers/Page.php";
+        $pageControllerClass = "App\\Controller\\Page";
+        if(class_exists($pageControllerClass)){
+            $pageController = new $pageControllerClass();
+            
+            $_GET['slug'] = $slug;
+            if(method_exists($pageController, 'renderBySlug')){
+                $pageController->renderBySlug();
+                exit;
+            }
+        }
+    }
     die("Page 404");
 }
 

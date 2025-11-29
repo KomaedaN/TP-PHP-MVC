@@ -195,14 +195,5 @@ class Auth extends Base
     public function renderResetPassword(){
         $this->renderPage("resetPassword");
     }
-    
-    public function isAuth(){
-        if(!isset($_SESSION["is_active"]) || $_SESSION["is_active"] !== true){
-            $this->renderHome();
-            exit;
-        }
-    }
-
-    
 }
 
