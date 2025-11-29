@@ -8,11 +8,11 @@
   controller: Auth
   action: renderSignup
 
-/login: 
+/login:
   controller: Auth
   action: renderLogin
 
-/addUser: 
+/addUser:
   controller: Auth
   action: signup
 
@@ -56,6 +56,30 @@
 /activation:
   controller: EmailVerification
   action: activateAccount
+
+/admin/pages:
+  controller: AdminPages
+  action: index
+
+/admin/pages/create:
+  controller: AdminPages
+  action: createForm
+
+/admin/pages/edit:
+  controller: AdminPages
+  action: editForm
+
+/admin/pages/delete:
+  controller: AdminPages
+  action: delete
+
+/admin/pages/create-submit:
+  controller: AdminPages
+  action: create
+
+/admin/pages/edit-submit:
+  controller: AdminPages
+  action: edit
 
 /sendNewPassword:
   controller: EmailVerification
