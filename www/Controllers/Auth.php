@@ -193,7 +193,55 @@ class Auth extends Base
     }
 
     public function renderResetPassword(){
-        $this->renderPage("resetPassword");
+        $this->renderPage("resetPassword", "backoffice");
+    }
+
+    public function renderModifyPassword(): void {
+        $emailService = new EmailVerification();
+        $token = isset($_GET["token"]) ? $_GET["token"] : null;
+        $isActiveToken = $emailService->verifyIfTokenExist($token);
+        if($isActiveToken){ $this->renderPage("modifyPassword", "frontoffice"); }
+    }
+
+    public function updatePassword() {
+         if(
+            !empty($_POST["email"]) &&
+            !empty($_POST['pwd']) &&
+            !empty($_POST['pwdConfirm']) &&
+            count($_POST) == 3
+         ){
+            $this->verifyPassword($_POST['pwd'], $_POST['pwdConfirm']);
+            if(empty($this->errors)){
+            $pwdHashed = password_hash($_POST["pwd"], PASSWORD_DEFAULT );
+            $email = $this->clearEmail( $_POST["email"] );
+            $auth = new AuthService();
+            $userId = $auth->getUserIdFromMail($email);
+            if(!empty($userId)){
+                $auth->updateUserPasswordFromId($userId, $pwdHashed);
+                $_SESSION['error']="Votre mot de passe à été modifié";
+                $this->renderPage("login");
+            } 
+            }else{
+                $_SESSION['error']="Mdp invalid";
+                $this->renderPage("modifyPassword", "frontoffice", ["errors" => $this->errors]);
+            } 
+        } else{
+            echo "Tentative de XSS";
+            $this->renderPage("signup");
+        }
+    }
+
+    public function verifyPassword($pwd, $pwdConfirm) {
+        if(strlen($pwd) < 8 ||
+            !preg_match('/[a-z]/', $pwd ) ||
+            !preg_match('/[A-Z]/', $pwd) ||
+            !preg_match('/[0-9]/', $pwd)
+        ){
+                $this->errors[]="Votre mot de passe doit faire au minimum 8 caractères avec min, maj, chiffres";
+        }
+        if($pwd != $pwdConfirm){ 
+            $this->errors[]="Votre mot de passe de confirmation ne correspond pas";
+        }  
     }
 }
 

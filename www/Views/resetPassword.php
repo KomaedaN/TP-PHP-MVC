@@ -12,7 +12,7 @@
 
 <div class="form">
     <h2>Connection</h2>
-    <form method="POST" action="/sendResetPwdMail">
+    <form method="POST" action="/sendNewPassword">
         <input type="email" value="<?= $_POST["email"] ?? "" ?>" required name="email" placeholder="Votre email"><br>
         <input class="btn btn_green" type="submit" value="Reset le mdp">
     </form>
