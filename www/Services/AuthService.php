@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Core\Database;
 use App\Model\User;
 use App\Service\BaseService;
 
@@ -124,10 +123,16 @@ class AuthService extends BaseService
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(["id"=>(int)$userId]);
     }
-/* A FIINIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIR
-    public function updateUserPassword($userId, $newPassword){
+
+    public function updateUserPasswordFromId($userId, $newPassword){
         $user = new User();
         $user->setPassword($newPassword);
+        $sql = 'UPDATE "user" SET password=:password WHERE id=:id';
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute([
+            "id" => (int)$userId,
+            "password" => $newPassword
+        ]);
     }
-        */
+
 }

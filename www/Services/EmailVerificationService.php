@@ -21,6 +21,19 @@ class EmailVerificationService extends BaseService
         ]);
     }
 
+    public function updateUserToken($userId, $token){
+        $emailVerification = new EmailVerification();
+        $emailVerification->setToken($token);
+        $sql = 'UPDATE "email_verification" SET token=:token WHERE user_id = :id';
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute(
+        [
+            "token" => $emailVerification->getToken(),
+            "id" => (int)$userId
+        ]
+        );
+    }
+
     public function getUserIdFromToken($token){
         $sql =  'SELECT "user_id" FROM email_verification WHERE token=:token';
         $queryPrepared = $this->pdo->prepare($sql);
@@ -35,4 +48,5 @@ class EmailVerificationService extends BaseService
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(["is_active" => $user->getIsActive(), "id" => $userId]);
     }
+
 }
