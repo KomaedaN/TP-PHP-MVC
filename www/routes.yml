@@ -16,10 +16,6 @@
   controller: Auth
   action: signup
 
-/createUser:
-  controller: Auth
-  action: createUser
-
 /signinUser:
   controller: Auth
   action: signin
@@ -60,6 +56,12 @@
   controller: Auth
   action: updatePassword
 
+
+
+
+
+
+
 #EmailVerification method/path
 /activation:
   controller: EmailVerification
@@ -68,23 +70,6 @@
 /sendNewPassword:
   controller: EmailVerification
   action: sendResetPwdMail
-#Base method/path
-/:
-  controller: Base
-  action: index
-
-#Auth method/path
-/signup:
-  controller: Auth
-  action: renderSignup
-
-/login:
-  controller: Auth
-  action: renderLogin
-
-/addUser:
-  controller: Auth
-  action: signup
 
 /createUser:
   controller: Auth
@@ -94,17 +79,6 @@
   controller: Auth
   action: signin
 
-/updateUser:
-  controller: Auth
-  action: updateUser
-
-/logout:
-  controller: Auth
-  action: logout
-
-/deleteUser:
-  controller: Auth
-  action: deleteUser
 
 /profil:
   controller: Auth
@@ -122,10 +96,14 @@
   controller: Auth
   action: renderResetPassword
 
-#EmailVerification method/path
-/activation:
-  controller: EmailVerification
-  action: activateAccount
+
+
+
+
+
+
+
+
 
 /admin/pages:
   controller: AdminPages
