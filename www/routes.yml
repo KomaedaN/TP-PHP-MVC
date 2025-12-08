@@ -80,28 +80,6 @@
   action: signin
 
 
-/profil:
-  controller: Auth
-  action: renderProfil
-
-/dashboard:
-  controller: Auth
-  action: renderDashboard
-
-/users:
-  controller: Auth
-  action: renderUsers
-
-/resetPassword:
-  controller: Auth
-  action: renderResetPassword
-
-
-
-
-
-
-
 
 
 
@@ -128,7 +106,3 @@
 /admin/pages/edit-submit:
   controller: AdminPages
   action: edit
-
-/sendNewPassword:
-  controller: EmailVerification
-  action: sendResetPwdMail
