@@ -58,11 +58,6 @@
 
 
 
-
-
-
-
-#EmailVerification method/path
 /activation:
   controller: EmailVerification
   action: activateAccount
@@ -78,9 +73,6 @@
 /signinUser:
   controller: Auth
   action: signin
-
-
-
 
 
 /admin/pages:
