@@ -18,7 +18,7 @@ if(isset($_SESSION['error'])) {
 ?>
 
 <div class="form">
-    <h2>Connection</h2>
+    <h2>Reset mot de passe</h2>
     <form method="POST" action="/updatePassword">
         <input type="hidden" name="email" value="<?= $_GET["email"]?>">
         <input type="password" required name="pwd" placeholder="Votre mot de passe"><br>

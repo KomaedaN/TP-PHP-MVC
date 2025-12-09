@@ -56,8 +56,6 @@
   controller: Auth
   action: updatePassword
 
-
-
 /activation:
   controller: EmailVerification
   action: activateAccount
