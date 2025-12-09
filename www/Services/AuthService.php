@@ -127,7 +127,7 @@ class AuthService extends BaseService
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute([
             "id" => (int)$userId,
-            "password" => $newPassword
+            "password" => $user->getPassword()
         ]);
     }
 
