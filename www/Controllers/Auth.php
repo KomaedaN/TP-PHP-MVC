@@ -193,7 +193,7 @@ class Auth extends Base
     }
 
     public function renderResetPassword(){
-        $this->renderPage("resetPassword", "backoffice");
+        $this->renderPage("resetPassword");
     }
 
     public function renderModifyPassword(): void {
