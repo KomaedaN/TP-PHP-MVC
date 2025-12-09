@@ -28,7 +28,7 @@ class Auth extends Base
                     $isActive = $auth->getIsActiveFromId($userId);
                     
                     if($isActive === true){
-                        $userData = $auth->getUserDataFromId($userId["id"]);
+                        $userData = $auth->getUserDataFromId($userId);
                         $this->setSessionData($userData);
                         $this->renderPage("dashboard");
                     } else {
@@ -93,7 +93,7 @@ class Auth extends Base
                 $emailService = new EmailVerificationService();
                 $emailService->createUserToken($data);  
                 $emailController = new EmailVerification();
-                $emailController->sendVerificationMail($email, $token);
+                $emailController->sendVerificationMail($email, $token, "Veuillez activer votre compte", 'activation');
             }
             $this->renderHome();
         } else {

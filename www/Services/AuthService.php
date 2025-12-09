@@ -89,11 +89,9 @@ class AuthService extends BaseService
         $sql = 'SELECT "id" FROM "user" WHERE email=:email';
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(["email"=>$email]);
-        $res = $queryPrepared->fetch();
-        if($res){
-            return $res;
-        }
-        return false;
+        $id = $queryPrepared->fetchColumn();
+
+        return $id ? (int)$id : false;
     }
 
     public function verifyPassword($email, $password){
@@ -110,12 +108,10 @@ class AuthService extends BaseService
     public function getIsActiveFromId($userId){
         $sql = 'SELECT "is_active" FROM "user" WHERE id=:id';
         $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute(["id"=>(int)$userId['id']]);
+        $queryPrepared->execute(["id"=>(int)$userId]);
         $res = $queryPrepared->fetchColumn();
-        if($res){
-            return $res;
-        }
-        return false;
+
+        return $res ? (bool)$res : false;
     } 
     
     public function deleteUserByID($userId){
