@@ -75,7 +75,7 @@
 
 /admin/pages:
   controller: AdminPages
-  action: index
+  action: renderWordPress
 
 /admin/pages/create:
   controller: AdminPages

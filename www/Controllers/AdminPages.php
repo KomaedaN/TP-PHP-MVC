@@ -9,13 +9,6 @@ class AdminPages extends Base
 {
     private $errors = [];
 
-    public function index(): void{
-        $this->isAuth();
-        $service = new PageService();
-        $pages = $service->listPages();
-        $this->renderPage('admin/pages', 'backoffice', ['pages' => $pages]);
-    }
-
     public function createForm(): void{
         $this->isAuth();
         $this->renderPage('admin/page-form', 'backoffice');
@@ -89,5 +82,12 @@ class AdminPages extends Base
         }
         header('Location: /admin/pages');
         exit;
+    }
+
+    public function renderWordPress(): void{
+        $this->isAuth();
+        $service = new PageService();
+        $pages = $service->listPages();
+        $this->renderPage('admin/pages', 'backoffice', ['pages' => $pages]);
     }
 }
