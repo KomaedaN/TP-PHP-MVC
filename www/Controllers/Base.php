@@ -25,7 +25,7 @@ class Base
     }
 
     public function setSessionData($userData) {
-    $keysToStore = ['id', 'name', 'email', 'is_active'];
+    $keysToStore = ['id', 'name', 'email', 'is_active', 'is_admin'];
 
     foreach ($keysToStore as $key) {
         if (isset($userData[$key])) { 

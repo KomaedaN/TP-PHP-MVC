@@ -31,7 +31,7 @@ class AuthService extends BaseService
 
 
     public function getUserDataFromId($userId){
-        $sql = 'SELECT email, name, is_active, id FROM "user" WHERE id=:id';
+        $sql = 'SELECT email, name, is_active, id, is_admin FROM "user" WHERE id=:id';
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute(["id" => (int)$userId]);
         $user = $queryPrepared->fetch();
@@ -53,7 +53,7 @@ class AuthService extends BaseService
 
 
     public function getAllUser(){
-        $sql = 'SELECT id, name, email FROM "user"';
+        $sql = 'SELECT id, name, email, is_admin FROM "user"';
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute();
         $allUser = $queryPrepared->fetchall();
@@ -131,4 +131,16 @@ class AuthService extends BaseService
         ]);
     }
 
+    public function setUserAdmin($userId){
+        $user = new User();
+        $user->setIsAdmin(true);
+        $sql = 'UPDATE "user" SET is_admin=:is_admin WHERE id = :id';
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute(
+        [
+            "is_admin" => $user->getIsAdmin(),
+            "id" => (int)$userId
+        ]
+        );
+    }
 }

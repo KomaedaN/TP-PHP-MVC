@@ -11,6 +11,7 @@ class User
     protected $password;
 
     protected $is_active;
+    protected $is_admin;
     function setName($name){
         $this->name = $name;
     }
@@ -27,6 +28,9 @@ class User
         $this->is_active = $data;
     }
 
+    function setIsAdmin($data){
+        $this->is_admin = $data;
+    }
     function getId(){ 
         return $this->id;
     }
@@ -44,5 +48,8 @@ class User
 
     function getIsActive(){
         return $this->is_active;
+    }
+    function getIsAdmin(){ 
+        return $this->is_admin;
     }
 }  

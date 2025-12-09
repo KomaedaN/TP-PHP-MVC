@@ -32,6 +32,10 @@
   controller: Auth
   action: deleteUser
 
+/setAdmin:
+  controller: Auth
+  action: setAdminUser
+
 /profil:
   controller: Auth
   action: renderProfil

@@ -165,6 +165,15 @@ class Auth extends Base
         }
     }
 
+    public function setAdminUser(){
+        $auth = new AuthService();
+        if(isset($_POST["id"])){
+            $auth->setUserAdmin($_POST['id']);
+        }
+        $this->renderUsers();
+        
+    }
+
     public function renderSignup(): void{
         $this->renderPage("signup");
     }
