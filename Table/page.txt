@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS page (
+  id serial PRIMARY KEY,
+  title text NOT NULL,
+  slug text NOT NULL UNIQUE,
+  content text NOT NULL,
+  status varchar(20) NOT NULL DEFAULT 'draft', -- draft|published
+  author_id integer NULL,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
