@@ -81,9 +81,9 @@
   controller: AdminPages
   action: renderWordPress
 
-/admin/pages/create:
+/admin/pages:
   controller: AdminPages
-  action: createForm
+  action: renderWordPress
 
 /admin/pages/edit:
   controller: AdminPages
