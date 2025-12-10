@@ -27,7 +27,7 @@ class AdminPages extends Base
                     'author_id' => $this->getCurrentUserId()
             ];
             $ps->createPage($data);
-            $this->renderPage('admin/pages', 'backoffice');
+            $this->renderPage('dashboard', 'backoffice');
         }
         else{
             $this->renderPage('admin/page-form', 'backoffice');
@@ -59,7 +59,7 @@ class AdminPages extends Base
                 'author_id' => $this->getCurrentUserId()
             ];
             $ps->updatePage($id, $data);
-            $this->renderPage('admin/pages', 'backoffice'); 
+            $this->renderPage('admin/page', 'backoffice'); 
         }
         else{
             $this->renderPage('admin/page-form', 'backoffice');
