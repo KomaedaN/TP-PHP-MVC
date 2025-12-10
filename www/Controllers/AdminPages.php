@@ -59,7 +59,7 @@ class AdminPages extends Base
                 'author_id' => $this->getCurrentUserId()
             ];
             $ps->updatePage($id, $data);
-            $this->renderPage('admin/page', 'backoffice'); 
+            $this->renderPage('dashboard', 'backoffice'); 
         }
         else{
             $this->renderPage('admin/page-form', 'backoffice');

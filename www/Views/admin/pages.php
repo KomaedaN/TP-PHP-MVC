@@ -17,11 +17,12 @@
                     <a href="/<?= htmlspecialchars($p['slug']) ?>" target="_blank">Voir</a> |
                      <?php if($p['author_id'] == $_SESSION['id'] || $_SESSION['is_admin'] == true): ?>
                         <a href="/admin/pages/edit?id=<?= $p['id'] ?>">Edit</a>
-                    <?php endif; ?>
-                    <form method="POST" action="/admin/pages/delete" style="display:inline">
+                        <form method="POST" action="/admin/pages/delete" style="display:inline">
                         <input type="hidden" name="id" value="<?= $p['id'] ?>">
                         <button type="submit" onclick="return confirm('Supprimer cette page ?')">Delete</button>
                     </form>
+                    <?php endif; ?>
+                    
                 </td>
             </tr>
         <?php endforeach; ?>
