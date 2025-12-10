@@ -13,14 +13,16 @@ class AuthService extends BaseService
         $user->setName($data['name']);
         $user->setEmail($data['email']);
         $user->setPassword($data['password']);
+        $user->setIsAdmin($data['is_admin']);
 
-        $sql =  'INSERT INTO "user"("name","email","password","created_at")
-                    VALUES (:name,:email,:password,\''.date('Y-m-d').'\')';
+        $sql =  'INSERT INTO "user"("name","email","password", "is_admin", "created_at")
+                    VALUES (:name,:email,:password,:is_admin,\''.date('Y-m-d').'\')';
         $queryPrepared = $this->pdo->prepare($sql);
         if ($queryPrepared->execute([
             "name" => $user->getName(),
             "email" => $user->getEmail(),
-            "password" => $user->getPassword()
+            "password" => $user->getPassword(),
+            "is_admin" => $user->getIsAdmin() ? true : false
         ]) 
         ) {
             $id = $this->pdo->lastInsertId();
@@ -142,5 +144,13 @@ class AuthService extends BaseService
             "id" => (int)$userId
         ]
         );
+    }
+
+    public function checkIfUserTableIsEmpty(){
+        $sql = 'SELECT COUNT(*) FROM "user"';
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        $res = $queryPrepared->fetch();
+        return $res;
     }
 }
