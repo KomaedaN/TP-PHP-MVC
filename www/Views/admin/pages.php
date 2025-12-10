@@ -1,6 +1,7 @@
 <h2>Pages</h2>
+<?php if( isset($_SESSION['id'])):?>
 <a href="/admin/pages/create">Créer une nouvelle page</a> | <a href="/dashboard">Retour au dashboard</a>
-
+<?php endif; ?>
 <?php if(!empty($pages)): ?>
     <table>
         <thead>
@@ -15,7 +16,8 @@
                 <td><?= htmlspecialchars($p['status']) ?></td>
                 <td>
                     <a href="/<?= htmlspecialchars($p['slug']) ?>" target="_blank">Voir</a> |
-                     <?php if($p['author_id'] == $_SESSION['id'] || $_SESSION['is_admin'] == true): ?>
+                     <?php if( isset($_SESSION['id']) && $p['author_id'] == $_SESSION['id'] || 
+                     isset($_SESSION['id']) && $_SESSION['is_admin'] == true): ?>
                         <a href="/admin/pages/edit?id=<?= $p['id'] ?>">Edit</a>
                         <form method="POST" action="/admin/pages/delete" style="display:inline">
                         <input type="hidden" name="id" value="<?= $p['id'] ?>">

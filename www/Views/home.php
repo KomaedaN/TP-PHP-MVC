@@ -3,6 +3,7 @@
 <ul class="home">
     <a href="/signup">S'inscrire</a>
     <a href="/login">Se connecter</a>
+    <a href="/admin/pages">Voir toutes les pages</a>
 </ul>
 <?php endif; ?>
 <?php include("isActiveNav.php"); ?>

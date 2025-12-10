@@ -78,10 +78,9 @@ class AdminPages extends Base
     }
 
     public function renderWordPress(): void{
-        $this->isAuth();
         $service = new PageService();
         $pages = $service->listPages();
-        $this->renderPage('admin/pages', 'backoffice', ['pages' => $pages]);
+        $this->renderPage('admin/pages', 'frontoffice', ['pages' => $pages]);
     }
 
 
