@@ -14,7 +14,6 @@ class AuthService extends BaseService
         $user->setEmail($data['email']);
         $user->setPassword($data['password']);
         $user->setIsAdmin($data['is_admin']);
-
         $sql =  'INSERT INTO "user"("name","email","password", "is_admin", "created_at")
                     VALUES (:name,:email,:password,:is_admin,\''.date('Y-m-d').'\')';
         $queryPrepared = $this->pdo->prepare($sql);
@@ -22,7 +21,7 @@ class AuthService extends BaseService
             "name" => $user->getName(),
             "email" => $user->getEmail(),
             "password" => $user->getPassword(),
-            "is_admin" => $user->getIsAdmin() ? true : false
+            "is_admin" => $user->getIsAdmin()
         ]) 
         ) {
             $id = $this->pdo->lastInsertId();

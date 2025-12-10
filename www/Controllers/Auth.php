@@ -79,12 +79,12 @@ class Auth extends Base
                 "name"=> $name,
                 "email"=> $email,
                 "password"=> $pwdHashed,
-                "is_admin"=> false,
+                "is_admin"=> 'false',
             ];
             $auth = new AuthService();
             $isUserEmpty = $auth->checkIfUserTableIsEmpty();
             if($isUserEmpty['count'] == 0) {
-                $data["is_admin"] = true;
+                $data["is_admin"] = 'true';
                 var_dump($data);
             }
             $userId = $auth->createUser($data);
