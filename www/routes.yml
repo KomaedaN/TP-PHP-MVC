@@ -79,7 +79,7 @@
 
 /admin/pages/create:
   controller: AdminPages
-  action: createForm
+  action: renderCreateForm
 
 /admin/pages/edit:
   controller: AdminPages

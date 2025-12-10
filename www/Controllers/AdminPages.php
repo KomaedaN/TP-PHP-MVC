@@ -9,10 +9,6 @@ class AdminPages extends Base
 {
     private $errors = [];
 
-    public function createForm(): void{
-        $this->isAuth();
-        $this->renderPage('admin/page-form', 'backoffice');
-    }
 
     public function create(): void{
         $this->isAuth();
@@ -31,18 +27,15 @@ class AdminPages extends Base
                     'author_id' => $this->getCurrentUserId()
             ];
             $ps->createPage($data);
-            header('Location: /admin/pages');
-            exit;
+            $this->renderPage('admin/pages', 'backoffice');
         }
-        $this->renderPage('admin/page-form', 'backoffice');
+        else{
+            $this->renderPage('admin/page-form', 'backoffice');
+        }
     }
 
     public function editForm(): void{
         $this->isAuth();
-        if(empty($_GET['id'])){
-            $this->renderPage('admin/pages', 'backoffice');
-            return;
-        }
         $id = (int)$_GET['id'];
         $ps = new PageService();
         $page = $ps->getPageById($id);
@@ -66,11 +59,11 @@ class AdminPages extends Base
                 'author_id' => $this->getCurrentUserId()
             ];
             $ps->updatePage($id, $data);
-            header('Location: /admin/pages');
-            exit;
+            $this->renderPage('admin/pages', 'backoffice'); 
         }
-        
-        $this->renderPage('admin/page-form', 'backoffice');
+        else{
+            $this->renderPage('admin/page-form', 'backoffice');
+        }
     }
 
     public function delete(): void{
@@ -89,5 +82,11 @@ class AdminPages extends Base
         $service = new PageService();
         $pages = $service->listPages();
         $this->renderPage('admin/pages', 'backoffice', ['pages' => $pages]);
+    }
+
+
+    public function renderCreateForm(): void{
+        $this->isAuth();
+        $this->renderPage('admin/page-form', 'backoffice');
     }
 }

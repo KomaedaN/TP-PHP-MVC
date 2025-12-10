@@ -15,7 +15,9 @@
                 <td><?= htmlspecialchars($p['status']) ?></td>
                 <td>
                     <a href="/<?= htmlspecialchars($p['slug']) ?>" target="_blank">Voir</a> |
+                    <?php if($p['author_id'] == $_SESSION['id']): ?>
                     <a href="/admin/pages/edit?id=<?= $p['id'] ?>">Edit</a>
+                    <?php endif; ?>
                     <form method="POST" action="/admin/pages/delete" style="display:inline">
                         <input type="hidden" name="id" value="<?= $p['id'] ?>">
                         <button type="submit" onclick="return confirm('Supprimer cette page ?')">Delete</button>
